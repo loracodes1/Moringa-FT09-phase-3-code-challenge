@@ -16,11 +16,12 @@ class Magazine:
             self._category = magazine['category']
         else:
             # Create an author
+            self._name = name
+            self.category = category
+        
             cursor.execute('INSERT INTO authors (magazines) VALUES (?, ?)', (name,category,))
             conn.commit()
             self._id = cursor.lastrowid # Use this to fetch the id of the newly created author
-            self._name = name
-            self._category = category
 
         cursor.close()
 

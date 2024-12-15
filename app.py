@@ -67,6 +67,15 @@ def main_old():
         print(Article(article["id"], article["title"], article["content"], article["author_id"], article["magazine_id"]))
 
 
+def add_author():
+    author_name = input("Enter authors name: ")
+
+    try:
+        Author(0, author_name)
+        print("Author successfully added")
+    except Exception as e:
+        print(e)
+
 def add_magazine():
     magazine_name = input("Enter magazine name: ")
     magazine_category = input("Enter magazine category: ")
@@ -77,13 +86,52 @@ def add_magazine():
     except Exception as e:
         print(e)
 
+def choose_author():
+    while True:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM authors")
+        rows = cursor.fetchall()
+        cursor.close()
+        author_ids = []
+
+        print("Choose author")
+        for row in rows:
+            author_ids.append(row["id"])
+            print(f"\t{row['id']}: {row['name']}")
+
+        print("\t0: add new author")
+        print("\t-1: Go Back")
+
+        author_id = int(input("Enter choice: "))
+
+        if author_id == -1:
+            return None
+
+        if author_id == 0:
+            # Create method for adding new magazine
+            add_author()
+            continue
+
+        if author_id not in author_ids:
+            print("Invalid choice, try again\n")
+            continue
+
+        # Valid magazine prommpt other
+        return author_id
+
 def add_article(magazine):
-    magazine_name = input("Enter magazine name: ")
-    magazine_category = input("Enter magazine category: ")
+    author_id = choose_author()
+
+    if author_id is None:
+        return
+    
+    article_title = input("Enter article title: ")
+    article_content = input("Enter article content: ")
 
     try:
-        Magazine(0, magazine_name, magazine_category)
-        print("Magazine successfully added")
+        Article(0, article_title, article_content, author_id, magazine.id)
+        print("Article successfully added")
     except Exception as e:
         print(e)
 

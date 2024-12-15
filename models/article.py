@@ -21,14 +21,15 @@ class Article:
             self._author_id = article['author_id']
             self._magazine_id = article['magazine_id']
         else:
-            # Create an author
+            # Create an article
+            self.title = title
+            self.magazine_id = magazine_id
+            self.author_id = author_id
+            self.content = content
+        
             cursor.execute('INSERT INTO articles (title, content, author_id, magazine_id) VALUES (?, ?, ?, ?)', 
                            (title,content,author_id,magazine_id,))
             self._id = cursor.lastrowid # Use this to fetch the id of the newly created author
-            self._title = title
-            self._magazine_id = magazine_id
-            self._author_id = author_id
-            self._content = content
             conn.commit()
 
         cursor.close()
@@ -81,7 +82,7 @@ class Article:
     
     @title.setter
     def title(self, title):
-        if hasattr(self, "id"):
+        if hasattr(self, "title"):
             raise ValueError("Title already set")
         
         if not isinstance(id, str):

@@ -12,11 +12,13 @@ class Author:
             self._id = author['id']
             self._name = author['name']
         else:
+            # Allows for validation
+            self.name = name
+            
             # Create an author
             cursor.execute('INSERT INTO authors (name) VALUES (?)', (name,))
             conn.commit()
             self._id = cursor.lastrowid # Use this to fetch the id of the newly created author
-            self._name = name
         
         cursor.close()    
 

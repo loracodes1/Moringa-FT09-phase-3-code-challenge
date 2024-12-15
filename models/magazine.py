@@ -16,7 +16,8 @@ class Magazine:
             self._category = magazine['category']
         else:
             # Create an author
-            self._name = name
+            self._id = 0
+            self.name = name
             self.category = category
         
             cursor.execute('INSERT INTO authors (magazines) VALUES (?, ?)', (name,category,))
@@ -45,7 +46,7 @@ class Magazine:
     
     @name.setter
     def name(self, name):        
-        if not isinstance(id, str):
+        if not isinstance(name, str):
             raise TypeError("Name must be string")
         
         if len(name) < 2 or len(name) > 16:
@@ -67,10 +68,10 @@ class Magazine:
     
     @category.setter
     def category(self, category):        
-        if not isinstance(id, str):
+        if not isinstance(category, str):
             raise TypeError("Category must be string")
         
-        if len(name) < 1:
+        if len(category) < 1:
             raise ValueError("Category must be greater than 0 characters")
         
         # Connect to the database

@@ -13,6 +13,7 @@ class Author:
             self._name = author['name']
         else:
             # Allows for validation
+            self._id = 0
             self.name = name
             
             # Create an author
@@ -45,7 +46,7 @@ class Author:
         if hasattr(self, "name"):
             raise ValueError("Name already set")
         
-        if not isinstance(id, str):
+        if not isinstance(name, str):
             raise TypeError("Name must be string")
         
         if len(name) == 0:

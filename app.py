@@ -161,8 +161,8 @@ def magazine_choices(magazine_id):
                 print(f"{article.title}")
                 print("-" * len(article.title))
                 print(f"{article.content}")
+                print("*" * 20)
 
-            print("*" * 20)
             print("\n")
 
             continue

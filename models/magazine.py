@@ -1,4 +1,6 @@
 from database.connection import get_db_connection
+from models.article import Article
+from models.author import Author
 
 class Magazine:
     def __init__(self, id, name = "", category = ""):
@@ -88,7 +90,7 @@ class Magazine:
         authors = []
 
         for article in rows:
-            temp = Author(article['id'])
+            temp = Author(article['author_id'])
             authors.append(temp)
 
         return authors
@@ -96,7 +98,7 @@ class Magazine:
     def articles(self):
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("SELECT article_id FROM articles WHERE magazine_id = ?", [self.id])
+        cursor.execute("SELECT id FROM articles WHERE magazine_id = ?", [self.id])
         rows = cursor.fetchall()
         conn.close()
         articles = []

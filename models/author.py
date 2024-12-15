@@ -1,6 +1,4 @@
 from database.connection import get_db_connection
-from models.article import Article
-from models.magazine import Magazine
 
 class Author:
     def __init__(self, id, name = ""):

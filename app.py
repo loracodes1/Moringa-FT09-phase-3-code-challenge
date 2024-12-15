@@ -77,12 +77,23 @@ def add_magazine():
     except Exception as e:
         print(e)
 
-def magazine_choices(author):
+def add_article(magazine):
+    magazine_name = input("Enter magazine name: ")
+    magazine_category = input("Enter magazine category: ")
+
+    try:
+        Magazine(0, magazine_name, magazine_category)
+        print("Magazine successfully added")
+    except Exception as e:
+        print(e)
+
+def magazine_choices(magazine_id):
+    magazine = Magazine(magazine_id)
+
     while True:
-        print(f"\t1. List {author.name} articles")
-        print(f"\t2. List {author.name} magazines")
-        print(f"\t3. Add new magazines")
-        print(f"\t4. Select magazines")
+        print(f"\t1. List {magazine.name} articles")
+        print(f"\t2. List {magazine.name} authors")
+        print(f"\t3. Add new article")
         print(f"\t-1. Go back")
 
         choice = int(input("Enter choice: "))
@@ -91,10 +102,10 @@ def magazine_choices(author):
             break
 
         if choice == 1:
-            articles = author.articles()
+            articles = magazine.articles()
 
             if articles is None:
-                print("No articles found for this author")
+                print("No articles found for this magazine")
                 continue
             
             print("*" * 20)
@@ -106,21 +117,29 @@ def magazine_choices(author):
             print("*" * 20)
             print("\n")
 
-        if choice == 2:
-            magazines = author.magazines()
+            continue
 
-            if magazines is None:
-                print("No magazines found for this author")
+        if choice == 2:
+            authors = magazine.contributors()
+
+            if authors is None:
+                print("No authors found for this magazine")
                 continue
             
             print("*" * 20)
-            for magazine in magazines:
-                print(f"{magazine.name} - {magazine.category}")
+            for author in authors:
+                print(f"{author.name}")
 
             print("*" * 20)
             print("\n")
 
+            continue
 
+        if choice == 3:
+            add_article(magazine)
+            continue
+
+        print("Invalid choice, try again\n")
 
 
 def main():
@@ -141,7 +160,7 @@ def main():
 
         print("Choose magazine")
         for row in rows:
-            magazine_id.append(row["id"])
+            magazine_ids.append(row["id"])
             print(f"\t{row['id']}: {row['name']}")
 
         print("\t0: add new magazine")
@@ -162,7 +181,7 @@ def main():
             continue
 
         # Valid magazine prommpt other
-        magazine_choices(Magazine(magazine_id))
+        magazine_choices(magazine_id)
         continue
 
 

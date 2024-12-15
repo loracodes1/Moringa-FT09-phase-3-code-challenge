@@ -13,8 +13,8 @@ class TestModels(unittest.TestCase):
         self.assertEqual(article.title, "Test Title")
 
     def test_magazine_creation(self):
-        magazine = Magazine(1, "Tech Weekly")
-        self.assertEqual(magazine.name, "Tech Weekly")
+        magazine = Magazine(1, "Tech Weekly", "Tech")
+        self.assertEqual(magazine.name, "Tech Weekly", "Tech")
 
 if __name__ == "__main__":
     unittest.main()
